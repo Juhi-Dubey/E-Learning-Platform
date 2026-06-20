@@ -20,7 +20,8 @@ function Courses() {
   };
 
   return (
-    <div>
+    // <div>
+    <div className="card">
       <h1>All Courses</h1>
 
       {courses.length === 0 ? (

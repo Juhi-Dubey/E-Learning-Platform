@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import API from "../services/api";
 
 function CourseDetail() {
@@ -29,9 +30,9 @@ function CourseDetail() {
         courseId: id,
       });
 
-      alert("Enrolled Successfully");
+      toast.success("Enrolled Successfully");
     } catch (error) {
-      alert(
+      toast.error(
         error.response?.data?.message ||
           "Enrollment Failed"
       );
@@ -43,7 +44,7 @@ function CourseDetail() {
   }
 
   return (
-    <div>
+    <div className="card">
       <h1>{course.title}</h1>
 
       <p>{course.description}</p>

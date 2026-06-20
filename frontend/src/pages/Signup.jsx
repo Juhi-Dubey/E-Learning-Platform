@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import API from "../services/api";
 
 function Signup() {
@@ -27,11 +28,11 @@ function Signup() {
         formData
       );
 
-      alert("Signup Successful");
+      toast.success("Signup Successful");
 
       navigate("/login");
     } catch (error) {
-      alert(
+      toast.error(
         error.response?.data?.message ||
           "Signup Failed"
       );
@@ -39,7 +40,8 @@ function Signup() {
   };
 
   return (
-    <div>
+    // <div>
+    <div className="card">
       <h2>Signup</h2>
 
       <form onSubmit={handleSubmit}>

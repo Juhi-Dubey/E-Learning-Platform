@@ -2,13 +2,7 @@ import { Link } from "react-router-dom";
 
 function CourseCard({ course }) {
   return (
-    <div
-      style={{
-        border: "1px solid gray",
-        padding: "15px",
-        margin: "10px",
-      }}
-    >
+    <div className="card">
       <h3>{course.title}</h3>
 
       <p>{course.description}</p>

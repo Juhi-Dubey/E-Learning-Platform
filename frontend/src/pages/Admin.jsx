@@ -1,9 +1,13 @@
-import { useEffect, useState } from "react";
+
+import { useEffect, useState, useRef } from "react";
 import API from "../services/api";
+import { toast } from "react-toastify";
+
 
 function Admin() {
+  const formRef = useRef(null);
   const [courses, setCourses] = useState([]);
-
+  const [deleteId, setDeleteId] = useState(null);
   const [editingId, setEditingId] = useState(null);
 
   const [formData, setFormData] = useState({
@@ -59,20 +63,20 @@ function Admin() {
           formData
         );
 
-        alert("Course Updated");
+        toast.success("Course Updated");
       } else {
         await API.post(
           "/courses",
           formData
         );
 
-        alert("Course Created");
+        toast.success("Course Created");
       }
 
       fetchCourses();
       resetForm();
     } catch (error) {
-      alert(
+      toast.error(
         error.response?.data?.message ||
           "Something went wrong"
       );
@@ -80,16 +84,13 @@ function Admin() {
   };
 
   const handleDelete = async (id) => {
-    const confirmDelete = window.confirm(
-      "Delete this course?"
-    );
-
-    if (!confirmDelete) return;
 
     try {
       await API.delete(`/courses/${id}`);
 
       fetchCourses();
+      setDeleteId(null);
+
     } catch (error) {
       console.log(error);
     }
@@ -106,127 +107,192 @@ function Admin() {
       price: course.price,
       slug: course.slug,
     });
+    formRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
 
   return (
-    <div
-      style={{
-        maxWidth: "900px",
-        margin: "30px auto",
-        padding: "20px",
-      }}
-    >
-      <h1>Admin Panel</h1>
+    <>
+      {deleteId && (
+        // <div
+        //   style={{
+        //     position: "fixed",
+        //     top: 0,
+        //     left: 0,
+        //     width: "100%",
+        //     height: "100%",
+        //     backgroundColor: "rgba(0,0,0,0.5)",
+        //     display: "flex",
+        //     justifyContent: "center",
+        //     alignItems: "center",
+        //   }}
+        // >
+        <div className="card">
+          {/* <div
+            style={{
+              backgroundColor: "white",
+              padding: "25px",
+              borderRadius: "10px",
+              width: "300px",
+              textAlign: "center",
+            }}
+          > */}
 
-      <form
-        onSubmit={handleSubmit}
+          <div className="card">
+            <h3>Delete Course?</h3>
+
+            <p>
+              This action cannot be undone.
+            </p>
+
+            <button
+              onClick={() =>
+                handleDelete(deleteId)
+              }
+              style={{
+                marginRight: "10px",
+              }}
+            >
+              Yes, Delete
+            </button>
+
+            <button
+              onClick={() =>
+                setDeleteId(null)
+              }
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* <div
         style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-          marginTop: "20px",
+          maxWidth: "900px",
+          margin: "30px auto",
+          padding: "20px",
         }}
-      >
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          value={formData.title}
-          onChange={handleChange}
-        />
+      > */}
 
-        <input
-          type="text"
-          name="slug"
-          placeholder="Slug"
-          value={formData.slug}
-          onChange={handleChange}
-        />
+      <div className="card">
+        <h1>Admin Panel</h1>
 
-        <input
-          type="text"
-          name="category"
-          placeholder="Category"
-          value={formData.category}
-          onChange={handleChange}
-        />
-
-        <input
-          type="text"
-          name="difficulty"
-          placeholder="Difficulty"
-          value={formData.difficulty}
-          onChange={handleChange}
-        />
-
-        <input
-          type="number"
-          name="price"
-          placeholder="Price"
-          value={formData.price}
-          onChange={handleChange}
-        />
-
-        <textarea
-          name="description"
-          placeholder="Description"
-          value={formData.description}
-          onChange={handleChange}
-        />
-
-        <button type="submit">
-          {editingId
-            ? "Update Course"
-            : "Create Course"}
-        </button>
-      </form>
-
-      <hr
-        style={{
-          margin: "30px 0",
-        }}
-      />
-
-      <h2>All Courses</h2>
-
-      {courses.map((course) => (
-        <div
-          key={course._id}
+        <form
+          ref={formRef}
+          onSubmit={handleSubmit}
           style={{
-            border: "1px solid #ccc",
-            padding: "15px",
-            marginBottom: "15px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+            marginTop: "20px",
           }}
         >
-          <h3>{course.title}</h3>
+          <input
+            type="text"
+            name="title"
+            placeholder="Title"
+            value={formData.title}
+            onChange={handleChange}
+          />
 
-          <p>{course.description}</p>
+          <input
+            type="text"
+            name="slug"
+            placeholder="Slug"
+            value={formData.slug}
+            onChange={handleChange}
+          />
 
-          <p>
-            ₹{course.price}
-          </p>
+          <input
+            type="text"
+            name="category"
+            placeholder="Category"
+            value={formData.category}
+            onChange={handleChange}
+          />
 
-          <button
-            onClick={() =>
-              handleEdit(course)
-            }
-            style={{
-              marginRight: "10px",
-            }}
-          >
-            Edit
+          <input
+            type="text"
+            name="difficulty"
+            placeholder="Difficulty"
+            value={formData.difficulty}
+            onChange={handleChange}
+          />
+
+          <input
+            type="number"
+            name="price"
+            placeholder="Price"
+            value={formData.price}
+            onChange={handleChange}
+          />
+
+          <textarea
+            name="description"
+            placeholder="Description"
+            value={formData.description}
+            onChange={handleChange}
+          />
+
+          <button type="submit">
+            {editingId
+              ? "Update Course"
+              : "Create Course"}
           </button>
+        </form>
 
-          <button
-            onClick={() =>
-              handleDelete(course._id)
-            }
+        <hr
+          style={{
+            margin: "30px 0",
+          }}
+        />
+
+        <h2>All Courses</h2>
+
+        {courses.map((course) => (
+          <div
+            key={course._id}
+
+            className="card"
+            // style={{
+            //   border: "1px solid #ccc",
+            //   padding: "15px",
+            //   marginBottom: "15px",
+            // }}
           >
-            Delete
-          </button>
-        </div>
-      ))}
-    </div>
+            <h3>{course.title}</h3>
+
+            <p>{course.description}</p>
+
+            <p>
+              ₹{course.price}
+            </p>
+
+            <button
+              onClick={() =>
+                handleEdit(course)
+              }
+              style={{
+                marginRight: "10px",
+              }}
+            >
+              Edit
+            </button>
+
+            <button
+              onClick={() =>
+                setDeleteId(course._id)
+              }
+            >
+              Delete
+            </button>
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 

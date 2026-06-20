@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import API from "../services/api";
 
 function Login() {
@@ -28,11 +29,11 @@ function Login() {
 
       localStorage.setItem("token", data.token);
 
-      alert("Login Successful");
+      toast.success("Login Successful");
 
       navigate("/courses");
     } catch (error) {
-      alert(
+      toast.error(
         error.response?.data?.message ||
           "Login Failed"
       );
@@ -40,7 +41,8 @@ function Login() {
   };
 
   return (
-    <div>
+    // <div>
+    <div className="card">
       <h2>Login</h2>
 
       <form onSubmit={handleSubmit}>

@@ -1,4 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 
 function Navbar() {
   const navigate = useNavigate();
@@ -15,7 +17,7 @@ function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem("token");
 
-    alert("Logged Out Successfully");
+    toast.success("Logged Out Successfully");
 
     navigate("/login");
   };
@@ -60,7 +62,8 @@ function Navbar() {
         </>
       )}
 
-      <div style={{ marginLeft: "auto" }}>
+      {/* <div style={{ marginLeft: "auto" }}> */}
+      <div className="card">
         {!token ? (
           <>
             <Link

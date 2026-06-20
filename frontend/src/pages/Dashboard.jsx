@@ -22,17 +22,19 @@ function Dashboard() {
   };
 
   return (
-    <div>
+    // <div>
+    <div className="card">
       <h1>My Dashboard</h1>
 
       {enrollments.map((item) => (
         <div
           key={item._id}
-          style={{
-            border: "1px solid gray",
-            padding: "10px",
-            margin: "10px",
-          }}
+          className="card"
+          // style={{
+          //   border: "1px solid gray",
+          //   padding: "10px",
+          //   margin: "10px",
+          // }}
         >
           <h3>
             {item.courseId?.title}
