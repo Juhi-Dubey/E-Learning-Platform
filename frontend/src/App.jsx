@@ -15,7 +15,7 @@ import Admin from "./pages/Admin";
 
 function App() {
   const role = localStorage.getItem("role");
-  
+
   return (
     <BrowserRouter>
       <Navbar/>
@@ -49,7 +49,7 @@ function App() {
               }
             />
 
-            <Route
+            {/* <Route
               path="/admin"
               element={
                 role === "admin" ? (
@@ -59,6 +59,15 @@ function App() {
                 ) : (
                   <Navigate to="/" />
                 )
+              }
+            /> */}
+
+            <Route
+              path="/admin"
+              element={
+                <PrivateRoute>
+                  <Admin />
+                </PrivateRoute>
               }
             />
           </Routes>
