@@ -1,21 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import { FaGraduationCap } from "react-icons/fa";
 
 function Navbar() {
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
-
-  const linkStyle = {
-    color: "white",
-    textDecoration: "none",
-    fontSize: "16px",
-    fontWeight: "500",
-  };
+  const role = localStorage.getItem("role");
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
 
     toast.success("Logged Out Successfully");
 
@@ -27,71 +22,88 @@ function Navbar() {
       style={{
         display: "flex",
         alignItems: "center",
-        gap: "25px",
-        padding: "15px 30px",
+        padding: "12px 30px",
         backgroundColor: "#2563eb",
         color: "white",
+        boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+        position: "sticky",
+        top: 0,
+        zIndex: 1000,
       }}
     >
-      <h2
+      {/* Logo */}
+      <div
         style={{
-          margin: 0,
-          marginRight: "30px",
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
+          fontSize: "24px",
+          fontWeight: "700",
         }}
       >
-        E-Learning
-      </h2>
+        <FaGraduationCap />
+        <span>E-Learning</span>
+      </div>
 
-      <Link to="/" style={linkStyle}>
-        Home
-      </Link>
+      {/* Links */}
+      <div
+        className="nav-links"
+        style={{
+          display: "flex",
+          gap: "25px",
+          marginLeft: "40px",
+        }}
+      >
+        <Link to="/" className="nav-link">
+          Home
+        </Link>
 
-      <Link to="/courses" style={linkStyle}>
-        Courses
-      </Link>
+        <Link to="/courses" className="nav-link">
+          Courses
+        </Link>
 
-      {token && (
-        <>
-          <Link to="/dashboard" style={linkStyle}>
+        {token && (
+          <Link
+            to="/dashboard"
+            className="nav-link"
+          >
             Dashboard
           </Link>
+        )}
 
-          <Link to="/admin" style={linkStyle}>
+        {role === "admin" && (
+          <Link
+            to="/admin"
+            className="nav-link"
+          >
             Admin
           </Link>
-        </>
-      )}
+        )}
+      </div>
 
-      {/* <div style={{ marginLeft: "auto" }}> */}
-      <div className="card">
+      {/* Right Side */}
+      <div
+        style={{
+          marginLeft: "auto",
+          display: "flex",
+          gap: "15px",
+          alignItems: "center",
+        }}
+      >
         {!token ? (
           <>
-            <Link
-              to="/login"
-              style={{
-                ...linkStyle,
-                marginRight: "20px",
-              }}
-            >
+            <Link to="/login" className="nav-link">
               Login
             </Link>
 
-            <Link to="/signup" style={linkStyle}>
+            <Link to="/signup" className="nav-link">
               Signup
             </Link>
           </>
         ) : (
           <button
             onClick={handleLogout}
-            style={{
-              backgroundColor: "white",
-              color: "#2563eb",
-              border: "none",
-              padding: "8px 15px",
-              borderRadius: "5px",
-              cursor: "pointer",
-              fontWeight: "600",
-            }}
+            className="logout-btn"
           >
             Logout
           </button>

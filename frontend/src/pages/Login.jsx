@@ -26,9 +26,14 @@ function Login() {
         "/auth/login",
         formData
       );
+      console.log(data.user);
 
       localStorage.setItem("token", data.token);
-
+      localStorage.setItem(
+        "role",
+        data.user.role
+      );
+      
       toast.success("Login Successful");
 
       navigate("/courses");
@@ -41,35 +46,60 @@ function Login() {
   };
 
   return (
-    // <div>
-    <div className="card">
-      <h2>Login</h2>
-
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-        />
-
-        <br />
-        <br />
-
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-        />
-
-        <br />
-        <br />
-
-        <button type="submit">
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "80vh",
+      }}
+    >
+      <div
+        className="card"
+        style={{
+          width: "450px",
+          maxWidth: "90%",
+        }}
+      >
+        <h2
+          style={{
+            marginBottom: "20px",
+            textAlign: "center",
+          }}
+        >
           Login
-        </button>
-      </form>
+        </h2>
+
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "15px",
+          }}
+        >
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            onChange={handleChange}
+          />
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={handleChange}
+          />
+
+          <button
+            type="submit"
+            className="primary-btn"
+          >
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

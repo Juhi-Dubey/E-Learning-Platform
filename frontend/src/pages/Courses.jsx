@@ -12,7 +12,6 @@ function Courses() {
   const fetchCourses = async () => {
     try {
       const { data } = await API.get("/courses");
-
       setCourses(data);
     } catch (error) {
       console.log(error);
@@ -20,19 +19,26 @@ function Courses() {
   };
 
   return (
-    // <div>
-    <div className="card">
-      <h1>All Courses</h1>
+    <div className="container">
+      <h1
+        style={{
+          marginBottom: "20px",
+        }}
+      >
+        All Courses
+      </h1>
 
       {courses.length === 0 ? (
         <p>No Courses Found</p>
       ) : (
-        courses.map((course) => (
-          <CourseCard
-            key={course._id}
-            course={course}
-          />
-        ))
+        <div className="course-grid">
+          {courses.map((course) => (
+            <CourseCard
+              key={course._id}
+              course={course}
+            />
+          ))}
+        </div>
       )}
     </div>
   );

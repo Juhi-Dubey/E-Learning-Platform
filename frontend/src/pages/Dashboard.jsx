@@ -23,7 +23,7 @@ function Dashboard() {
 
   return (
     // <div>
-    <div className="card">
+    <div className="container">
       <h1>My Dashboard</h1>
 
       {enrollments.map((item) => (

@@ -40,45 +40,67 @@ function Signup() {
   };
 
   return (
-    // <div>
-    <div className="card">
-      <h2>Signup</h2>
-
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          onChange={handleChange}
-        />
-
-        <br />
-        <br />
-
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={handleChange}
-        />
-
-        <br />
-        <br />
-
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-        />
-
-        <br />
-        <br />
-
-        <button type="submit">
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "80vh",
+      }}
+    >
+      <div
+        className="card"
+        style={{
+          width: "450px",
+          maxWidth: "90%",
+        }}
+      >
+        <h2
+          style={{
+            textAlign: "center",
+            marginBottom: "20px",
+          }}
+        >
           Signup
-        </button>
-      </form>
+        </h2>
+
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "15px",
+          }}
+        >
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            onChange={handleChange}
+          />
+
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            onChange={handleChange}
+          />
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={handleChange}
+          />
+
+          <button
+            type="submit"
+            className="primary-btn"
+          >
+            Signup
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
