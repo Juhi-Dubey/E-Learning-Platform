@@ -26,14 +26,13 @@ function Login() {
         "/auth/login",
         formData
       );
-      console.log(data.user);
 
       localStorage.setItem("token", data.token);
       localStorage.setItem(
         "role",
         data.user.role
       );
-      
+
       toast.success("Login Successful");
 
       navigate("/courses");
